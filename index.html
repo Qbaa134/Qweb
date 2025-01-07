@@ -3,60 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qweb Browser</title>
+    <title>QWeb Browser</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Logo Qweb -->
-    <div class="logo-bar">
-        <h1>Qweb</h1>
-        <button id="toggle-sidebar">📁</button>
-    </div>
-
-    <!-- Pasek adresu z wyszukiwaniem -->
-    <div class="top-bar">
-        <input type="text" id="search-input" placeholder="Search or enter URL...">
-        <button id="search-btn">🔍</button>
-    </div>
-
-    <!-- Okno przeglądarki -->
-    <iframe id="browser-window" src="https://www.example.com"></iframe>
-
-    <!-- Karta boczna (chowana) -->
-    <div id="sidebar" class="hidden">
-        <h2>Sidebar Menu</h2>
-        <button id="notes-tab">📝 Notes</button>
-        <button id="bookmarks-tab">📑 Bookmarks</button>
-        <button id="history-tab">📜 History</button>
-        <button id="account-tab">👤 Account</button>
-
-        <!-- Notes Section -->
-        <div id="notes-section" class="section hidden">
-            <h3>Notes</h3>
-            <textarea id="notes-area" placeholder="Write your notes here..."></textarea>
-        </div>
-
-        <!-- Bookmarks Section -->
-        <div id="bookmarks-section" class="section hidden">
-            <h3>Bookmarks</h3>
-            <ul id="bookmark-list"></ul>
-            <button id="add-bookmark">Add Bookmark</button>
-        </div>
-
-        <!-- History Section -->
-        <div id="history-section" class="section hidden">
-            <h3>History</h3>
-            <ul id="history-list"></ul>
-        </div>
-
-        <!-- Account Section -->
-        <div id="account-section" class="section hidden">
-            <h3>Create Account</h3>
-            <input type="text" id="username" placeholder="Username">
-            <input type="password" id="password" placeholder="Password">
-            <button id="create-account">Create Account</button>
-            <p id="account-status"></p>
-        </div>
+    <div class="browser">
+        <h1>QWeb Browser</h1>
+        <input type="text" id="searchBox" placeholder="Enter URL or Search Phrase">
+        <button onclick="search()">Go</button>
     </div>
 
     <script src="script.js"></script>
