@@ -1,41 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geographical Tools</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generowanie Życzeń z AI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .wish-text {
+      margin: 20px 0;
+      font-size: 1.2em;
+      text-align: center;
+      padding: 10px;
+      background-color: #e9f7e1;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Geographical Tools</h1>
-        <p>Welcome to the geographical analysis tools website. Use our interactive map tools and more!</p>
-    </header>
+  <div class="container">
+    <h1>Generowanie Życzeń z AI</h1>
     
-    <section id="map-container">
-        <h2>Interactive Map</h2>
-        <div id="map"></div>
-        <button id="addPointBtn">Add Point</button>
-        <button id="calculateDistanceBtn">Calculate Distance</button>
-    </section>
+    <label for="occasion">Wpisz okazję:</label>
+    <input type="text" id="occasion" placeholder="np. Urodziny, Święta, itp.">
 
-    <section id="upload-container">
-        <h2>Upload Your Data</h2>
-        <input type="file" id="uploadFile" accept=".kml,.gpx" />
-        <button id="uploadBtn">Upload Data</button>
-    </section>
+    <label for="name">Imię osoby (opcjonalnie):</label>
+    <input type="text" id="name" placeholder="Imię osoby (opcjonalnie)">
+    
+    <label for="no-name">Bez zwrotu do osoby:</label>
+    <input type="checkbox" id="no-name">
+    
+    <button onclick="generateWish()">Generuj życzenia</button>
+    
+    <div id="wish" class="wish-text"></div>
+    
+    <button id="copyBtn" style="display:none;" onclick="copyWish()">Kopiuj życzenia</button>
+  </div>
 
-    <section id="analysis-container">
-        <h2>Terrain Analysis</h2>
-        <label for="terrainPoint">Select a Point for Terrain Info:</label>
-        <input type="text" id="terrainPoint" placeholder="Enter coordinates" />
-        <button id="analyzeTerrainBtn">Analyze Terrain</button>
-    </section>
+  <script>
+    // Funkcja generująca życzenia przez AI
+    function generateWish() {
+      const occasion = document.getElementById('occasion').value;
+      const name = document.getElementById('name').value;
+      const noName = document.getElementById('no-name').checked;
+      
+      if (!occasion) {
+        alert('Proszę wpisać okazję!');
+        return;
+      }
 
-    <footer>
-        <p>GeoTools - Powered by GitHub Pages</p>
-    </footer>
+      // Generowanie życzeń przez AI na podstawie okazji
+      let wishText = generateAIWish(occasion);
 
-    <script src="script.js"></script>
+      // Dodanie imienia, jeśli jest wprowadzono
+      if (name && !noName) {
+        wishText = `Drogi/a ${name}, ${wishText}`;
+      }
+
+      document.getElementById('wish').innerText = wishText;
+      document.getElementById('copyBtn').style.display = 'inline-block';
+    }
+
+    // Funkcja generująca życzenia przez AI na podstawie okazji
+    function generateAIWish(occasion) {
+      // Przykładowe szablony życzeń, które generują życzenia na podstawie okazji
+      const wishTemplates = [
+        `Z okazji ${occasion}, życzę Ci wszystkiego najlepszego, pełnego radości i spełnienia marzeń!`,
+        `Niech ${occasion} będzie dla Ciebie wyjątkowym dniem pełnym niezapomnianych chwil.`,
+        `Z okazji ${occasion} życzę Ci niezliczonych powodów do uśmiechu i zdrowia na każdy dzień!`,
+        `Życzę Ci wspaniałych chwil z okazji ${occasion}, pełnych miłości, pokoju i radości!`
+      ];
+
+      return wishTemplates[Math.floor(Math.random() * wishTemplates.length)];
+    }
+
+    // Funkcja do kopiowania życzeń
+    function copyWish() {
+      const wishText = document.getElementById('wish').innerText;
+      navigator.clipboard.writeText(wishText).then(() => {
+        alert('Życzenia skopiowane!');
+      });
+    }
+  </script>
 </body>
-</html>
+    </html>
