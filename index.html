@@ -3,16 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QWeb Browser</title>
+    <title>Geographical Tools</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="browser">
-        <h1>QWeb Browser</h1>
-        <input type="text" id="searchBox" placeholder="Enter URL or Search Phrase">
-        <button onclick="search()">Go</button>
-        <div id="searchResults"></div>
-    </div>
+    <header>
+        <h1>Geographical Tools</h1>
+        <p>Welcome to the geographical analysis tools website. Use our interactive map tools and more!</p>
+    </header>
+    
+    <section id="map-container">
+        <h2>Interactive Map</h2>
+        <div id="map"></div>
+        <button id="addPointBtn">Add Point</button>
+        <button id="calculateDistanceBtn">Calculate Distance</button>
+    </section>
+
+    <section id="upload-container">
+        <h2>Upload Your Data</h2>
+        <input type="file" id="uploadFile" accept=".kml,.gpx" />
+        <button id="uploadBtn">Upload Data</button>
+    </section>
+
+    <section id="analysis-container">
+        <h2>Terrain Analysis</h2>
+        <label for="terrainPoint">Select a Point for Terrain Info:</label>
+        <input type="text" id="terrainPoint" placeholder="Enter coordinates" />
+        <button id="analyzeTerrainBtn">Analyze Terrain</button>
+    </section>
+
+    <footer>
+        <p>GeoTools - Powered by GitHub Pages</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
