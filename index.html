@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qweb Browser</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="browser">
+        <!-- Logo Qweb -->
+        <div class="logo-bar">
+            <h1>Qweb</h1>
+        </div>
+
+        <!-- Pasek adresu z ikoną lupy -->
+        <div class="top-bar">
+            <input type="text" id="url-input" placeholder="Enter URL...">
+            <button id="search-btn">🔍</button>
+        </div>
+
+        <!-- Okno przeglądarki -->
+        <iframe id="browser-window" src="https://www.example.com"></iframe>
+
+        <!-- Menu deweloperskie -->
+        <div class="dev-tools">
+            <textarea id="console-log" placeholder="Dev Tools Console..."></textarea>
+            <select id="language-select">
+                <option value="javascript">JavaScript</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+                <option value="c">C</option>
+                <option value="cpp">C++</option>
+                <option value="batch">Batch</option>
+            </select>
+            <button id="run-code">Run Code</button>
+        </div>
+    </div>
+
+    <!-- Sidebar: Zakładki, Historia, Notatki -->
+    <div class="sidebar">
+        <button id="toggle-bookmarks">📑 Bookmarks</button>
+        <button id="toggle-history">📜 History</button>
+        <button id="toggle-notes">📝 Notes</button>
+
+        <div id="bookmarks" class="hidden">
+            <h3>Bookmarks</h3>
+            <ul id="bookmark-list"></ul>
+            <button id="add-bookmark">Add Bookmark</button>
+        </div>
+
+        <div id="history" class="hidden">
+            <h3>History</h3>
+            <ul id="history-list"></ul>
+        </div>
+
+        <div id="notes" class="hidden">
+            <h3>Notes</h3>
+            <textarea id="notes-area" placeholder="Write your notes here..."></textarea>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
