@@ -40,3 +40,10 @@ button {
 button:hover {
     background-color: #45a049;
 }
+
+#searchResults {
+    margin-top: 20px;
+    text-align: left;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
