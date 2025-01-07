@@ -1,38 +1,56 @@
-// Prosta baza danych stron i fraz
-const localData = [
-    { title: 'GitHub', url: 'https://github.com', description: 'Platform for version control and collaboration' },
-    { title: 'MDN Web Docs', url: 'https://developer.mozilla.org', description: 'Web development resources and documentation' },
-    { title: 'W3Schools', url: 'https://www.w3schools.com', description: 'Learn web development with tutorials and references' },
-    { title: 'QWeb', url: 'https://example.com/qweb', description: 'This is an example page for QWeb' },
-];
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
 
-// Funkcja wyszukiwania wewnętrznego
-function search() {
-    const query = document.getElementById('searchBox').value.toLowerCase();
-    const resultsContainer = document.getElementById('searchResults');
-    resultsContainer.innerHTML = ''; // Resetujemy poprzednie wyniki
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
 
-    if (!query) {
-        resultsContainer.innerHTML = '<p>Please enter a search phrase or URL.</p>';
-        return;
-    }
+h1 {
+    margin: 0;
+}
 
-    const results = localData.filter(item => 
-        item.title.toLowerCase().includes(query) || 
-        item.description.toLowerCase().includes(query)
-    );
+#map {
+    width: 100%;
+    height: 400px;
+    background-color: #d3d3d3;
+}
 
-    if (results.length > 0) {
-        results.forEach(item => {
-            const resultItem = document.createElement('div');
-            resultItem.classList.add('result');
-            resultItem.innerHTML = `
-                <h3><a href="${item.url}" target="_blank">${item.title}</a></h3>
-                <p>${item.description}</p>
-            `;
-            resultsContainer.appendChild(resultItem);
-        });
-    } else {
-        resultsContainer.innerHTML = '<p>No results found.</p>';
-    }
+section {
+    margin: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+input[type="file"], input[type="text"] {
+    padding: 10px;
+    width: 100%;
+    margin: 10px 0;
+}
+
+footer {
+    text-align: center;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
