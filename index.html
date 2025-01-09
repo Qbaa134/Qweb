@@ -96,7 +96,7 @@
             if (!value) return;
 
             // Call the public API for conversion (no key needed)
-            const apiUrl = `https://api.convert-units.com/convert?value=${value}&from=${fromUnit}&to=${toUnit}`;
+            const apiUrl = 'https://api.convert-units.com/convert?value=${value}&from=${fromUnit}&to=${toUnit}';
             
             try {
                 const response = await fetch(apiUrl);
