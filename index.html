@@ -37,6 +37,7 @@
             font-size: 18px;
             font-weight: bold;
             color: #333;
+            transition: transform 0.1s ease;
         }
         .direction.north { top: 10px; left: 50%; transform: translateX(-50%); }
         .direction.east { top: 50%; left: 95%; transform: translateY(-50%); }
@@ -61,8 +62,10 @@
 </div>
 
 <div id="location">
-    <p>Wysokość: <span id="altitude">Ładowanie...</span> m</p>
     <p>Lokalizacja: <span id="location-info">Ładowanie...</span></p>
+    <p>Prędkość: <span id="speed">Ładowanie...</span> km/h</p>
+    <p>Dokładność: <span id="accuracy">Ładowanie...</span> m</p>
+    <p>Czas ostatniej aktualizacji: <span id="timestamp">Ładowanie...</span></p>
 </div>
 
 <script>
@@ -70,25 +73,35 @@
         window.addEventListener("deviceorientation", function(event) {
             var alpha = event.alpha;
             var needle = document.getElementById("needle");
+            var directions = document.querySelectorAll(".direction");
             needle.style.transform = "rotate(" + alpha + "deg)";
+            directions.forEach(function(direction) {
+                direction.style.transform = "rotate(" + alpha + "deg)";
+            });
         });
     } else {
         alert("Twoje urządzenie nie obsługuje tej funkcji.");
     }
 
-    // Geolokalizacja i wysokość
+    // Geolokalizacja
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var altitude = position.coords.altitude || "Brak danych";
+        navigator.geolocation.watchPosition(function(position) {
             var lat = position.coords.latitude;
             var lon = position.coords.longitude;
+            var speed = position.coords.speed || 0; // prędkość w m/s
+            var accuracy = position.coords.accuracy;
+            var timestamp = new Date(position.timestamp).toLocaleString();
 
-            // Wyświetlanie wysokości nad poziomem morza i współrzędnych
-            document.getElementById("altitude").textContent = altitude;
+            // Konwersja prędkości z m/s na km/h
+            var speedKmH = (speed * 3.6).toFixed(2);
+
+            // Wyświetlanie danych
             document.getElementById("location-info").textContent = "Szerokość: " + lat.toFixed(6) + ", Długość: " + lon.toFixed(6);
+            document.getElementById("speed").textContent = speedKmH;
+            document.getElementById("accuracy").textContent = accuracy;
+            document.getElementById("timestamp").textContent = timestamp;
         }, function(error) {
-            document.getElementById("altitude").textContent = "Błąd: " + error.message;
-            document.getElementById("location-info").textContent = "Nie można uzyskać lokalizacji";
+            alert("Błąd geolokalizacji: " + error.message);
         });
     } else {
         alert("Twoje urządzenie nie obsługuje geolokalizacji.");
