@@ -28,56 +28,46 @@
     <script>
         const categories = {
             length: {
-                units: ["meters", "centimeters", "millimeters", "kilometers", "decimeters"],
-                symbol: ["m", "cm", "mm", "km", "dm"]
+                units: ["m", "cm", "mm", "km", "dm"]
             },
             mass: {
-                units: ["grams", "kilograms", "tons", "dekagrams"],
-                symbol: ["g", "kg", "t", "dg"]
+                units: ["g", "kg", "t", "dg"]
             },
             temperature: {
-                units: ["Celsius", "Fahrenheit", "Kelvin"],
-                symbol: ["°C", "°F", "K"]
+                units: ["°C", "°F", "K"]
             },
             time: {
-                units: ["seconds", "minutes", "hours", "days"],
-                symbol: ["s", "min", "h", "d"]
+                units: ["s", "min", "h", "d"]
             },
             speed: {
-                units: ["meters per second", "kilometers per hour", "miles per hour"],
-                symbol: ["m/s", "km/h", "mph"]
+                units: ["m/s", "km/h", "mph"]
             },
             volume: {
-                units: ["liters", "milliliters", "cubic meters", "cubic centimeters"],
-                symbol: ["L", "mL", "m³", "cm³"]
+                units: ["L", "mL", "m³", "cm³"]
             },
             area: {
-                units: ["square meters", "square kilometers", "square centimeters", "hectares", "acres"],
-                symbol: ["m²", "km²", "cm²", "ha", "ac"]
+                units: ["m²", "km²", "cm²", "ha", "ac"]
             },
             pressure: {
-                units: ["pascals", "kilopascals", "bars", "atmospheres", "millimeters of mercury", "pounds per square inch"],
-                symbol: ["Pa", "kPa", "bar", "atm", "mmHg", "psi"]
+                units: ["Pa", "kPa", "bar", "atm", "mmHg", "psi"]
             },
             storage: {
-                units: ["bits", "bytes", "kilobytes", "megabytes", "gigabytes", "terabytes"],
-                symbol: ["b", "B", "KB", "MB", "GB", "TB"]
+                units: ["b", "B", "KB", "MB", "GB", "TB"]
             }
         };
 
         function updateUnits() {
             const category = document.getElementById("category").value;
             const units = categories[category].units;
-            const symbols = categories[category].symbol;
             let html = `
                 <label for="fromUnit">From:</label>
                 <select id="fromUnit">
-                    ${units.map((unit, index) => `<option value="${unit}">${unit} (${symbols[index]})</option>`).join('')}
+                    ${units.map(unit => `<option value="${unit}">${unit}</option>`).join('')}
                 </select>
                 
                 <label for="toUnit">To:</label>
                 <select id="toUnit">
-                    ${units.map((unit, index) => `<option value="${unit}">${unit} (${symbols[index]})</option>`).join('')}
+                    ${units.map(unit => `<option value="${unit}">${unit}</option>`).join('')}
                 </select>
 
                 <label for="value">Value:</label>
@@ -95,21 +85,22 @@
 
             if (!value) return;
 
-            // Call the public API for conversion (no key needed)
-            const apiUrl = 'https://api.convert-units.com/convert?value=${value}&from=${fromUnit}&to=${toUnit}';
-            
+            // Here we need to call a working API that supports unit conversion
+            // Example API URL - you will need to find a free, reliable API
+            const apiUrl = `https://api.exchangerate-api.com/v4/latest/${fromUnit}`;
+
             try {
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-                
-                // Ensure the response contains a result
-                if (data.result !== undefined) {
+
+                // Check if API response contains valid data
+                if (data && data.result) {
                     document.getElementById("result").textContent = `Result: ${data.result}`;
                 } else {
-                    document.getElementById("result").textContent = "Error: Invalid conversion.";
+                    document.getElementById("result").textContent = "Error: Conversion failed.";
                 }
             } catch (error) {
-                document.getElementById("result").textContent = "Error in conversion.";
+                document.getElementById("result").textContent = "Error: Unable to connect to the conversion service.";
             }
         }
 
