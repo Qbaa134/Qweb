@@ -129,7 +129,7 @@
         const value = parseFloat(document.getElementById('value').value);
         let result = 0;
 
-        // Length
+        // Długość
         if (unitType === 'length') {
             if (fromUnit === 'Meters') {
                 if (toUnit === 'Centimeters') result = value * 100;
@@ -142,10 +142,9 @@
                 if (toUnit === 'Kilometers') result = value / 100000;
                 if (toUnit === 'Decimeters') result = value / 10;
             }
-            // Add other conversions for different units...
         }
 
-        // Mass
+        // Masa
         if (unitType === 'mass') {
             if (fromUnit === 'Grams') {
                 if (toUnit === 'Kilograms') result = value / 1000;
@@ -156,10 +155,9 @@
                 if (toUnit === 'Tons') result = value / 1000;
                 if (toUnit === 'Dekagrams') result = value * 100;
             }
-            // Add other conversions for different units...
         }
 
-        // Temperature
+        // Temperatura
         if (unitType === 'temperature') {
             if (fromUnit === 'Celsius') {
                 if (toUnit === 'Fahrenheit') result = (value * 9/5) + 32;
@@ -168,39 +166,35 @@
                 if (toUnit === 'Celsius') result = (value - 32) * 5/9;
                 if (toUnit === 'Kelvin') result = (value - 32) * 5/9 + 273.15;
             }
-            // Add other conversions for different units...
         }
 
-        // Time
+        // Czas
         if (unitType === 'time') {
             if (fromUnit === 'Seconds') {
                 if (toUnit === 'Minutes') result = value / 60;
                 if (toUnit === 'Hours') result = value / 3600;
                 if (toUnit === 'Days') result = value / 86400;
             }
-            // Add other conversions for different units...
         }
 
-        // Speed
+        // Prędkość
         if (unitType === 'speed') {
             if (fromUnit === 'm/s') {
                 if (toUnit === 'km/h') result = value * 3.6;
                 if (toUnit === 'mph') result = value * 2.23694;
             }
-            // Add other conversions for different units...
         }
 
-        // Volume
+        // Objętość
         if (unitType === 'volume') {
             if (fromUnit === 'Liters') {
                 if (toUnit === 'Milliliters') result = value * 1000;
                 if (toUnit === 'Cubic Meters') result = value / 1000;
                 if (toUnit === 'Cubic Centimeters') result = value * 1000;
             }
-            // Add other conversions for different units...
         }
 
-        // Area
+        // Powierzchnia
         if (unitType === 'area') {
             if (fromUnit === 'Square Meters') {
                 if (toUnit === 'Square Kilometers') result = value / 1000000;
@@ -208,10 +202,9 @@
                 if (toUnit === 'Hectares') result = value / 10000;
                 if (toUnit === 'Acres') result = value * 0.000247105;
             }
-            // Add other conversions for different units...
         }
 
-        // Pressure
+        // Ciśnienie
         if (unitType === 'pressure') {
             if (fromUnit === 'Pascals') {
                 if (toUnit === 'Kilopascals') result = value / 1000;
@@ -220,17 +213,15 @@
                 if (toUnit === 'mmHg') result = value / 133.322;
                 if (toUnit === 'psi') result = value / 6894.76;
             }
-            // Add other conversions for different units...
         }
 
-        // Computer Storage
+        // Pojemność komputerów
         if (unitType === 'storage') {
             if (fromUnit === 'Bits') {
                 if (toUnit === 'Bytes') result = value / 8;
                 if (toUnit === 'Kilobytes') result = value / 8192;
                 if (toUnit === 'Megabytes') result = value / 8388608;
             }
-            // Add other conversions for different units...
         }
 
         document.getElementById('result').textContent = `Result: ${result} ${toUnit}`;
