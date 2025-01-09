@@ -4,378 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit Converter</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-        }
-        select, input {
-            margin-bottom: 10px;
-            padding: 5px;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .section {
-            flex: 1;
-            min-width: 300px;
-        }
-    </style>
 </head>
 <body>
     <h1>Unit Converter</h1>
-    <div class="container">
-        <!-- Length Conversion -->
-        <div class="section">
-            <h3>Length</h3>
-            <input type="number" id="lengthInput" placeholder="Value">
-            <select id="lengthFrom">
-                <option value="m">Meters</option>
-                <option value="cm">Centimeters</option>
-                <option value="mm">Millimeters</option>
-                <option value="km">Kilometers</option>
-                <option value="dm">Decimeters</option>
-            </select>
-            <select id="lengthTo">
-                <option value="m">Meters</option>
-                <option value="cm">Centimeters</option>
-                <option value="mm">Millimeters</option>
-                <option value="km">Kilometers</option>
-                <option value="dm">Decimeters</option>
-            </select>
-            <button onclick="convertLength()">Convert</button>
-            <p id="lengthResult"></p>
-        </div>
+    
+    <label for="category">Choose a category:</label>
+    <select id="category" onchange="updateUnits()">
+        <option value="length">Length</option>
+        <option value="mass">Mass</option>
+        <option value="temperature">Temperature</option>
+        <option value="time">Time</option>
+        <option value="speed">Speed</option>
+        <option value="volume">Volume</option>
+        <option value="area">Area</option>
+        <option value="pressure">Pressure</option>
+        <option value="storage">Storage</option>
+    </select>
 
-        <!-- Mass Conversion -->
-        <div class="section">
-            <h3>Mass</h3>
-            <input type="number" id="massInput" placeholder="Value">
-            <select id="massFrom">
-                <option value="g">Grams</option>
-                <option value="kg">Kilograms</option>
-                <option value="t">Tons</option>
-                <option value="dg">Dekagrams</option>
-            </select>
-            <select id="massTo">
-                <option value="g">Grams</option>
-                <option value="kg">Kilograms</option>
-                <option value="t">Tons</option>
-                <option value="dg">Dekagrams</option>
-            </select>
-            <button onclick="convertMass()">Convert</button>
-            <p id="massResult"></p>
-        </div>
-
-        <!-- Temperature Conversion -->
-        <div class="section">
-            <h3>Temperature</h3>
-            <input type="number" id="tempInput" placeholder="Value">
-            <select id="tempFrom">
-                <option value="C">Celsius (°C)</option>
-                <option value="F">Fahrenheit (°F)</option>
-                <option value="K">Kelvin (K)</option>
-            </select>
-            <select id="tempTo">
-                <option value="C">Celsius (°C)</option>
-                <option value="F">Fahrenheit (°F)</option>
-                <option value="K">Kelvin (K)</option>
-            </select>
-            <button onclick="convertTemperature()">Convert</button>
-            <p id="tempResult"></p>
-        </div>
-
-        <!-- Time Conversion -->
-        <div class="section">
-            <h3>Time</h3>
-            <input type="number" id="timeInput" placeholder="Value">
-            <select id="timeFrom">
-                <option value="s">Seconds</option>
-                <option value="min">Minutes</option>
-                <option value="h">Hours</option>
-                <option value="d">Days</option>
-            </select>
-            <select id="timeTo">
-                <option value="s">Seconds</option>
-                <option value="min">Minutes</option>
-                <option value="h">Hours</option>
-                <option value="d">Days</option>
-            </select>
-            <button onclick="convertTime()">Convert</button>
-            <p id="timeResult"></p>
-        </div>
-
-        <!-- Speed Conversion -->
-        <div class="section">
-            <h3>Speed</h3>
-            <input type="number" id="speedInput" placeholder="Value">
-            <select id="speedFrom">
-                <option value="m/s">Meters per second</option>
-                <option value="km/h">Kilometers per hour</option>
-                <option value="mph">Miles per hour</option>
-            </select>
-            <select id="speedTo">
-                <option value="m/s">Meters per second</option>
-                <option value="km/h">Kilometers per hour</option>
-                <option value="mph">Miles per hour</option>
-            </select>
-            <button onclick="convertSpeed()">Convert</button>
-            <p id="speedResult"></p>
-        </div>
-
-        <!-- Volume Conversion -->
-        <div class="section">
-            <h3>Volume</h3>
-            <input type="number" id="volumeInput" placeholder="Value">
-            <select id="volumeFrom">
-                <option value="L">Liters</option>
-                <option value="mL">Milliliters</option>
-                <option value="m³">Cubic Meters</option>
-                <option value="cm³">Cubic Centimeters</option>
-            </select>
-            <select id="volumeTo">
-                <option value="L">Liters</option>
-                <option value="mL">Milliliters</option>
-                <option value="m³">Cubic Meters</option>
-                <option value="cm³">Cubic Centimeters</option>
-            </select>
-            <button onclick="convertVolume()">Convert</button>
-            <p id="volumeResult"></p>
-        </div>
-
-        <!-- Area Conversion -->
-        <div class="section">
-            <h3>Area</h3>
-            <input type="number" id="areaInput" placeholder="Value">
-            <select id="areaFrom">
-                <option value="m²">Square Meters</option>
-                <option value="km²">Square Kilometers</option>
-                <option value="cm²">Square Centimeters</option>
-                <option value="ha">Hectares</option>
-                <option value="ac">Acres</option>
-            </select>
-            <select id="areaTo">
-                <option value="m²">Square Meters</option>
-                <option value="km²">Square Kilometers</option>
-                <option value="cm²">Square Centimeters</option>
-                <option value="ha">Hectares</option>
-                <option value="ac">Acres</option>
-            </select>
-            <button onclick="convertArea()">Convert</button>
-            <p id="areaResult"></p>
-        </div>
-
-        <!-- Pressure Conversion -->
-        <div class="section">
-            <h3>Pressure</h3>
-            <input type="number" id="pressureInput" placeholder="Value">
-            <select id="pressureFrom">
-                <option value="Pa">Pascals</option>
-                <option value="kPa">Kilopascals</option>
-                <option value="bar">Bars</option>
-                <option value="atm">Atmospheres</option>
-                <option value="mmHg">Millimeters of mercury</option>
-                <option value="psi">Pounds per square inch</option>
-            </select>
-            <select id="pressureTo">
-                <option value="Pa">Pascals</option>
-                <option value="kPa">Kilopascals</option>
-                <option value="bar">Bars</option>
-                <option value="atm">Atmospheres</option>
-                <option value="mmHg">Millimeters of mercury</option>
-                <option value="psi">Pounds per square inch</option>
-            </select>
-            <button onclick="convertPressure()">Convert</button>
-            <p id="pressureResult"></p>
-        </div>
-
-        <!-- Storage Capacity Conversion -->
-        <div class="section">
-            <h3>Storage Capacity</h3>
-            <input type="number" id="storageInput" placeholder="Value">
-            <select id="storageFrom">
-                <option value="b">Bits</option>
-                <option value="B">Bytes</option>
-                <option value="KB">Kilobytes</option>
-                <option value="MB">Megabytes</option>
-                <option value="GB">Gigabytes</option>
-                <option value="TB">Terabytes</option>
-            </select>
-            <select id="storageTo">
-                <option value="b">Bits</option>
-                <option value="B">Bytes</option>
-                <option value="KB">Kilobytes</option>
-                <option value="MB">Megabytes</option>
-                <option value="GB">Gigabytes</option>
-                <option value="TB">Terabytes</option>
-            </select>
-            <button onclick="convertStorage()">Convert</button>
-            <p id="storageResult"></p>
-        </div>
+    <div id="conversion">
+        <!-- The conversion interface will be generated dynamically here -->
     </div>
 
     <script>
-        function convertLength() {
-            const value = parseFloat(document.getElementById("lengthInput").value);
-            const from = document.getElementById("lengthFrom").value;
-            const to = document.getElementById("lengthTo").value;
-
-            const units = {
-                m: 1,
-                cm: 100,
-                mm: 1000,
-                km: 0.001,
-                dm: 10
-            };
-
-            const result = value * (units[from] / units[to]);
-            document.getElementById("lengthResult").innerText = result.toFixed(2) + " " + to;
-        }
-
-        function convertMass() {
-            const value = parseFloat(document.getElementById("massInput").value);
-            const from = document.getElementById("massFrom").value;
-            const to = document.getElementById("massTo").value;
-
-            const units = {
-                g: 1,
-                kg: 0.001,
-                t: 1e-6,
-                dg: 10
-            };
-
-            const result = value * (units[from] / units[to]);
-            document.getElementById("massResult").innerText = result.toFixed(2) + " " + to;
-        }
-
-        function convertTemperature() {
-            const value = parseFloat(document.getElementById("tempInput").value);
-            const from = document.getElementById("tempFrom").value;
-            const to = document.getElementById("tempTo").value;
-
-            let result;
-
-            if (from === "C" && to === "F") {
-                result = (value * 9/5) + 32;
-            } else if (from === "C" && to === "K") {
-                result = value + 273.15;
-            } else if (from === "F" && to === "C") {
-                result = (value - 32) * 5/9;
-            } else if (from === "F" && to === "K") {
-                result = ((value - 32) * 5/9) + 273.15;
-            } else if (from === "K" && to === "C") {
-                result = value - 273.15;
-            } else if (from === "K" && to === "F") {
-                result = ((value - 273.15) * 9/5) + 32;
-            } else {
-                result = value;
+        const categories = {
+            length: {
+                units: ["meters", "centimeters", "millimeters", "kilometers", "decimeters"],
+                symbol: ["m", "cm", "mm", "km", "dm"]
+            },
+            mass: {
+                units: ["grams", "kilograms", "tons", "dekagrams"],
+                symbol: ["g", "kg", "t", "dg"]
+            },
+            temperature: {
+                units: ["Celsius", "Fahrenheit", "Kelvin"],
+                symbol: ["°C", "°F", "K"]
+            },
+            time: {
+                units: ["seconds", "minutes", "hours", "days"],
+                symbol: ["s", "min", "h", "d"]
+            },
+            speed: {
+                units: ["meters per second", "kilometers per hour", "miles per hour"],
+                symbol: ["m/s", "km/h", "mph"]
+            },
+            volume: {
+                units: ["liters", "milliliters", "cubic meters", "cubic centimeters"],
+                symbol: ["L", "mL", "m³", "cm³"]
+            },
+            area: {
+                units: ["square meters", "square kilometers", "square centimeters", "hectares", "acres"],
+                symbol: ["m²", "km²", "cm²", "ha", "ac"]
+            },
+            pressure: {
+                units: ["pascals", "kilopascals", "bars", "atmospheres", "millimeters of mercury", "pounds per square inch"],
+                symbol: ["Pa", "kPa", "bar", "atm", "mmHg", "psi"]
+            },
+            storage: {
+                units: ["bits", "bytes", "kilobytes", "megabytes", "gigabytes", "terabytes"],
+                symbol: ["b", "B", "KB", "MB", "GB", "TB"]
             }
+        };
 
-            document.getElementById("tempResult").innerText = result.toFixed(2) + " " + to;
+        function updateUnits() {
+            const category = document.getElementById("category").value;
+            const units = categories[category].units;
+            const symbols = categories[category].symbol;
+            let html = `
+                <label for="fromUnit">From:</label>
+                <select id="fromUnit">
+                    ${units.map((unit, index) => `<option value="${unit}">${unit} (${symbols[index]})</option>`).join('')}
+                </select>
+                
+                <label for="toUnit">To:</label>
+                <select id="toUnit">
+                    ${units.map((unit, index) => `<option value="${unit}">${unit} (${symbols[index]})</option>`).join('')}
+                </select>
+
+                <label for="value">Value:</label>
+                <input type="number" id="value" placeholder="Enter value" oninput="convert()">
+                
+                <p id="result"></p>
+            `;
+            document.getElementById("conversion").innerHTML = html;
         }
 
-        function convertTime() {
-            const value = parseFloat(document.getElementById("timeInput").value);
-            const from = document.getElementById("timeFrom").value;
-            const to = document.getElementById("timeTo").value;
+        async function convert() {
+            const value = document.getElementById("value").value;
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
 
-            const units = {
-                s: 1,
-                min: 1/60,
-                h: 1/3600,
-                d: 1/86400
-            };
+            if (!value) return;
 
-            const result = value * (units[from] / units[to]);
-            document.getElementById("timeResult").innerText = result.toFixed(2) + " " + to;
+            // Call the public API for conversion (no key needed)
+            const apiUrl = `https://api.convert-units.com/convert?value=${value}&from=${fromUnit}&to=${toUnit}`;
+            
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                // Ensure the response contains a result
+                if (data.result !== undefined) {
+                    document.getElementById("result").textContent = `Result: ${data.result}`;
+                } else {
+                    document.getElementById("result").textContent = "Error: Invalid conversion.";
+                }
+            } catch (error) {
+                document.getElementById("result").textContent = "Error in conversion.";
+            }
         }
 
-        function convertSpeed() {
-            const value = parseFloat(document.getElementById("speedInput").value);
-            const from = document.getElementById("speedFrom").value;
-            const to = document.getElementById("speedTo").value;
-
-            const units = {
-                "m/s": 1,
-                "km/h": 3.6,
-                "mph": 2.23694
-            };
-
-            const result = value * (units[from] / units[to]);
-            document.getElementById("speedResult").innerText = result.toFixed(2) + " " + to;
-        }
-
-        function convertVolume() {
-            const value = parseFloat(document.getElementById("volumeInput").value);
-            const from = document.getElementById("volumeFrom").value;
-            const to = document.getElementById("volumeTo").value;
-
-            const units = {
-                L: 1,
-                mL: 1000,
-                "m³": 0.001,
-                "cm³": 1000
-            };
-
-            const result = value * (units[from] / units[to]);
-            document.getElementById("volumeResult").innerText = result.toFixed(2) + " " + to;
-        }
-
-        function convertArea() {
-            const value = parseFloat(document.getElementById("areaInput").value);
-            const from = document.getElementById("areaFrom").value;
-            const to = document.getElementById("areaTo").value;
-
-            const units = {
-                "m²": 1,
-                "km²": 1e-6,
-                "cm²": 10000,
-                ha: 0.0001,
-                ac: 0.000247105
-            };
-
-            const result = value * (units[from] / units[to]);
-            document.getElementById("areaResult").innerText = result.toFixed(2) + " " + to;
-        }
-
-        function convertPressure() {
-            const value = parseFloat(document.getElementById("pressureInput").value);
-            const from = document.getElementById("pressureFrom").value;
-            const to = document.getElementById("pressureTo").value;
-
-            const units = {
-                Pa: 1,
-                kPa: 0.001,
-                bar: 0.00001,
-                atm: 9.8692e-6,
-                mmHg: 0.00750062,
-                psi: 0.0001450377
-            };
-
-            const result = value * (units[from] / units[to]);
-            document.getElementById("pressureResult").innerText = result.toFixed(2) + " " + to;
-        }
-
-        function convertStorage() {
-            const value = parseFloat(document.getElementById("storageInput").value);
-            const from = document.getElementById("storageFrom").value;
-            const to = document.getElementById("storageTo").value;
-
-            const units = {
-                b: 1,
-                B: 8,
-                KB: 8e3,
-                MB: 8e6,
-                GB: 8e9,
-                TB: 8e12
-            };
-
-            const result = value * (units[from] / units[to]);
-            document.getElementById("storageResult").innerText = result.toFixed(2) + " " + to;
-        }
+        updateUnits(); // Initial category setup
     </script>
 </body>
 </html>
