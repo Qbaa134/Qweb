@@ -3,108 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit Converter</title>
+    <title>Kompas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #compass {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            border-radius: 50%;
+            border: 5px solid #000;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #needle {
+            width: 4px;
+            height: 90px;
+            background-color: red;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform-origin: 50% 100%;
+            transition: transform 0.1s ease;
+        }
+        h1 {
+            font-size: 24px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Unit Converter</h1>
-    
-    <label for="category">Choose a category:</label>
-    <select id="category" onchange="updateUnits()">
-        <option value="length">Length</option>
-        <option value="mass">Mass</option>
-        <option value="temperature">Temperature</option>
-        <option value="time">Time</option>
-        <option value="speed">Speed</option>
-        <option value="volume">Volume</option>
-        <option value="area">Area</option>
-        <option value="pressure">Pressure</option>
-        <option value="storage">Storage</option>
-    </select>
 
-    <div id="conversion">
-        <!-- The conversion interface will be generated dynamically here -->
-    </div>
+<h1>Kompas</h1>
+<div id="compass">
+    <div id="needle"></div>
+</div>
 
-    <script>
-        const categories = {
-            length: {
-                units: ["m", "cm", "mm", "km", "dm"]
-            },
-            mass: {
-                units: ["g", "kg", "t", "dg"]
-            },
-            temperature: {
-                units: ["°C", "°F", "K"]
-            },
-            time: {
-                units: ["s", "min", "h", "d"]
-            },
-            speed: {
-                units: ["m/s", "km/h", "mph"]
-            },
-            volume: {
-                units: ["L", "mL", "m³", "cm³"]
-            },
-            area: {
-                units: ["m²", "km²", "cm²", "ha", "ac"]
-            },
-            pressure: {
-                units: ["Pa", "kPa", "bar", "atm", "mmHg", "psi"]
-            },
-            storage: {
-                units: ["b", "B", "KB", "MB", "GB", "TB"]
-            }
-        };
+<script>
+    if (window.DeviceOrientationEvent) {
+        window.addEventListener("deviceorientation", function(event) {
+            var alpha = event.alpha;
+            var needle = document.getElementById("needle");
+            needle.style.transform = "rotate(" + alpha + "deg)";
+        });
+    } else {
+        alert("Twoje urządzenie nie obsługuje tej funkcji.");
+    }
+</script>
 
-        function updateUnits() {
-            const category = document.getElementById("category").value;
-            const units = categories[category].units;
-            let html = `
-                <label for="fromUnit">From:</label>
-                <select id="fromUnit">
-                    ${units.map(unit => `<option value="${unit}">${unit}</option>`).join('')}
-                </select>
-                
-                <label for="toUnit">To:</label>
-                <select id="toUnit">
-                    ${units.map(unit => `<option value="${unit}">${unit}</option>`).join('')}
-                </select>
-
-                <label for="value">Value:</label>
-                <input type="number" id="value" placeholder="Enter value" oninput="convert()">
-                
-                <p id="result"></p>
-            `;
-            document.getElementById("conversion").innerHTML = html;
-        }
-
-        async function convert() {
-            const value = document.getElementById("value").value;
-            const fromUnit = document.getElementById("fromUnit").value;
-            const toUnit = document.getElementById("toUnit").value;
-
-            if (!value) return;
-
-            // Here we need to call a working API that supports unit conversion
-            // Example API URL - you will need to find a free, reliable API
-            const apiUrl = `https://api.exchangerate-api.com/v4/latest/${fromUnit}`;
-
-            try {
-                const response = await fetch(apiUrl);
-                const data = await response.json();
-
-                // Check if API response contains valid data
-                if (data && data.result) {
-                    document.getElementById("result").textContent = `Result: ${data.result}`;
-                } else {
-                    document.getElementById("result").textContent = "Error: Conversion failed.";
-                }
-            } catch (error) {
-                document.getElementById("result").textContent = "Error: Unable to connect to the conversion service.";
-            }
-        }
-
-        updateUnits(); // Initial category setup
-    </script>
 </body>
 </html>
