@@ -131,100 +131,128 @@
 
         // Długość
         if (unitType === 'length') {
-            if (fromUnit === 'Meters') {
-                if (toUnit === 'Centimeters') result = value * 100;
-                if (toUnit === 'Millimeters') result = value * 1000;
-                if (toUnit === 'Kilometers') result = value / 1000;
-                if (toUnit === 'Decimeters') result = value * 10;
-            } else if (fromUnit === 'Centimeters') {
-                if (toUnit === 'Meters') result = value / 100;
-                if (toUnit === 'Millimeters') result = value * 10;
-                if (toUnit === 'Kilometers') result = value / 100000;
-                if (toUnit === 'Decimeters') result = value / 10;
-            }
+            result = convertLength(fromUnit, toUnit, value);
         }
 
         // Masa
         if (unitType === 'mass') {
-            if (fromUnit === 'Grams') {
-                if (toUnit === 'Kilograms') result = value / 1000;
-                if (toUnit === 'Tons') result = value / 1000000;
-                if (toUnit === 'Dekagrams') result = value / 10;
-            } else if (fromUnit === 'Kilograms') {
-                if (toUnit === 'Grams') result = value * 1000;
-                if (toUnit === 'Tons') result = value / 1000;
-                if (toUnit === 'Dekagrams') result = value * 100;
-            }
+            result = convertMass(fromUnit, toUnit, value);
         }
 
         // Temperatura
         if (unitType === 'temperature') {
-            if (fromUnit === 'Celsius') {
-                if (toUnit === 'Fahrenheit') result = (value * 9/5) + 32;
-                if (toUnit === 'Kelvin') result = value + 273.15;
-            } else if (fromUnit === 'Fahrenheit') {
-                if (toUnit === 'Celsius') result = (value - 32) * 5/9;
-                if (toUnit === 'Kelvin') result = (value - 32) * 5/9 + 273.15;
-            }
+            result = convertTemperature(fromUnit, toUnit, value);
         }
 
         // Czas
         if (unitType === 'time') {
-            if (fromUnit === 'Seconds') {
-                if (toUnit === 'Minutes') result = value / 60;
-                if (toUnit === 'Hours') result = value / 3600;
-                if (toUnit === 'Days') result = value / 86400;
-            }
+            result = convertTime(fromUnit, toUnit, value);
         }
 
         // Prędkość
         if (unitType === 'speed') {
-            if (fromUnit === 'm/s') {
-                if (toUnit === 'km/h') result = value * 3.6;
-                if (toUnit === 'mph') result = value * 2.23694;
-            }
+            result = convertSpeed(fromUnit, toUnit, value);
         }
 
         // Objętość
         if (unitType === 'volume') {
-            if (fromUnit === 'Liters') {
-                if (toUnit === 'Milliliters') result = value * 1000;
-                if (toUnit === 'Cubic Meters') result = value / 1000;
-                if (toUnit === 'Cubic Centimeters') result = value * 1000;
-            }
+            result = convertVolume(fromUnit, toUnit, value);
         }
 
         // Powierzchnia
         if (unitType === 'area') {
-            if (fromUnit === 'Square Meters') {
-                if (toUnit === 'Square Kilometers') result = value / 1000000;
-                if (toUnit === 'Square Centimeters') result = value * 10000;
-                if (toUnit === 'Hectares') result = value / 10000;
-                if (toUnit === 'Acres') result = value * 0.000247105;
-            }
+            result = convertArea(fromUnit, toUnit, value);
         }
 
         // Ciśnienie
         if (unitType === 'pressure') {
-            if (fromUnit === 'Pascals') {
-                if (toUnit === 'Kilopascals') result = value / 1000;
-                if (toUnit === 'Bars') result = value / 100000;
-                if (toUnit === 'Atmospheres') result = value / 101325;
-                if (toUnit === 'mmHg') result = value / 133.322;
-                if (toUnit === 'psi') result = value / 6894.76;
-            }
+            result = convertPressure(fromUnit, toUnit, value);
         }
 
         // Pojemność komputerów
         if (unitType === 'storage') {
-            if (fromUnit === 'Bits') {
-                if (toUnit === 'Bytes') result = value / 8;
-                if (toUnit === 'Kilobytes') result = value / 8192;
-                if (toUnit === 'Megabytes') result = value / 8388608;
-            }
+            result = convertStorage(fromUnit, toUnit, value);
         }
 
         document.getElementById('result').textContent = `Result: ${result} ${toUnit}`;
+    }
+
+    // Funkcja konwersji dla długości
+    function convertLength(fromUnit, toUnit, value) {
+        const units = {
+            'Meters': 1, 'Centimeters': 100, 'Millimeters': 1000, 'Kilometers': 0.001, 'Decimeters': 10
+        };
+        return value * units[fromUnit] / units[toUnit];
+    }
+
+    // Funkcja konwersji dla masy
+    function convertMass(fromUnit, toUnit, value) {
+        const units = {
+            'Grams': 1, 'Kilograms': 0.001, 'Tons': 1e-6, 'Dekagrams': 0.1
+        };
+        return value * units[fromUnit] / units[toUnit];
+    }
+
+    // Funkcja konwersji dla temperatury
+    function convertTemperature(fromUnit, toUnit, value) {
+        if (fromUnit === 'Celsius') {
+            if (toUnit === 'Fahrenheit') return (value * 9/5) + 32;
+            if (toUnit === 'Kelvin') return value + 273.15;
+        } else if (fromUnit === 'Fahrenheit') {
+            if (toUnit === 'Celsius') return (value - 32) * 5/9;
+            if (toUnit === 'Kelvin') return (value - 32) * 5/9 + 273.15;
+        } else if (fromUnit === 'Kelvin') {
+            if (toUnit === 'Celsius') return value - 273.15;
+            if (toUnit === 'Fahrenheit') return (value - 273.15) * 9/5 + 32;
+        }
+    }
+
+    // Funkcja konwersji dla czasu
+    function convertTime(fromUnit, toUnit, value) {
+        const units = {
+            'Seconds': 1, 'Minutes': 1/60, 'Hours': 1/3600, 'Days': 1/86400
+        };
+        return value * units[fromUnit] / units[toUnit];
+    }
+
+    // Funkcja konwersji dla prędkości
+    function convertSpeed(fromUnit, toUnit, value) {
+        const units = {
+            'm/s': 1, 'km/h': 3.6, 'mph': 2.23694
+        };
+        return value * units[fromUnit] / units[toUnit];
+    }
+
+    // Funkcja konwersji dla objętości
+    function convertVolume(fromUnit, toUnit, value) {
+        const units = {
+            'Liters': 1, 'Milliliters': 1000, 'Cubic Meters': 0.001, 'Cubic Centimeters': 1000
+        };
+        return value * units[fromUnit] / units[toUnit];
+    }
+
+    // Funkcja konwersji dla powierzchni
+    function convertArea(fromUnit, toUnit, value) {
+        const units = {
+            'Square Meters': 1, 'Square Kilometers': 1e-6, 'Square Centimeters': 10000, 'Hectares': 0.0001, 'Acres': 0.000247105
+        };
+        return value * units[fromUnit] / units[toUnit];
+    }
+
+    // Funkcja konwersji dla ciśnienia
+    function convertPressure(fromUnit, toUnit, value) {
+        const units = {
+            'Pascals': 1, 'Kilopascals': 0.001, 'Bars': 1e-5, 'Atmospheres': 9.8692e-6, 'mmHg': 0.00750062, 'psi': 0.0001450377
+        };
+        return value * units[fromUnit] / units[toUnit];
+    }
+
+    // Funkcja konwersji dla pojemności komputerów
+    function convertStorage(fromUnit, toUnit, value) {
+        const units = {
+            'Bits': 1, 'Bytes': 8, 'Kilobytes': 8192, 'Megabytes': 8388608, 'Gigabytes': 8589934592, 'Terabytes': 8796093022208
+        };
+        return value * units[fromUnit] / units[toUnit];
     }
 
     updateUnits();
