@@ -3,55 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text to File Downloader</title>
+    <title>Universal Unit Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .converter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>Enter your script and download it in various formats</h1>
 
-    <!-- Textarea for script input -->
-    <textarea id="scriptInput" rows="10" cols="50" placeholder="Write your script here..."></textarea><br><br>
+<div class="converter-container">
+    <h1>Universal Unit Converter</h1>
+    <div class="form-group">
+        <label for="unitType">Select Unit Type:</label>
+        <select id="unitType" onchange="updateUnits()">
+            <option value="length">Length</option>
+            <option value="mass">Mass</option>
+            <option value="temperature">Temperature</option>
+            <option value="time">Time</option>
+            <option value="speed">Speed</option>
+            <option value="volume">Volume</option>
+            <option value="area">Area</option>
+            <option value="pressure">Pressure</option>
+            <option value="storage">Computer Storage</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="fromUnit">From:</label>
+        <select id="fromUnit"></select>
+    </div>
+    <div class="form-group">
+        <label for="toUnit">To:</label>
+        <select id="toUnit"></select>
+    </div>
+    <div class="form-group">
+        <label for="value">Value:</label>
+        <input type="number" id="value" placeholder="Enter value" />
+    </div>
+    <button onclick="convert()">Convert</button>
+    <div class="result" id="result"></div>
+</div>
 
-    <!-- Dropdown for file type selection -->
-    <label for="fileType">Choose file format: </label>
-    <select id="fileType">
-        <option value="txt">Text (.txt)</option>
-        <option value="bin">Binary (.bin)</option>
-        <option value="iso">ISO (.iso)</option>
-        <option value="zip">ZIP (.zip)</option>
-        <option value="pdf">PDF (.pdf)</option>
-        <option value="py">Python (.py)</option>
-        <option value="html">HTML (.html)</option>
-        <option value="js">JavaScript (.js)</option>
-        <option value="css">CSS (.css)</option>
-        <option value="c">C (.c)</option>
-        <option value="cpp">C++ (.cpp)</option>
-        <option value="bat">Batch (.bat)</option>
-        <option value="odt">Open Document Text (.odt)</option>
-    </select><br><br>
+<script>
+    const unitOptions = {
+        length: ['Meters', 'Centimeters', 'Millimeters', 'Kilometers', 'Decimeters'],
+        mass: ['Grams', 'Kilograms', 'Tons', 'Dekagrams'],
+        temperature: ['Celsius', 'Fahrenheit', 'Kelvin'],
+        time: ['Seconds', 'Minutes', 'Hours', 'Days'],
+        speed: ['m/s', 'km/h', 'mph'],
+        volume: ['Liters', 'Milliliters', 'Cubic Meters', 'Cubic Centimeters'],
+        area: ['Square Meters', 'Square Kilometers', 'Square Centimeters', 'Hectares', 'Acres'],
+        pressure: ['Pascals', 'Kilopascals', 'Bars', 'Atmospheres', 'mmHg', 'psi'],
+        storage: ['Bits', 'Bytes', 'Kilobytes', 'Megabytes', 'Gigabytes', 'Terabytes']
+    };
 
-    <!-- Download Button -->
-    <button onclick="downloadFile()">Download File</button>
+    function updateUnits() {
+        const unitType = document.getElementById('unitType').value;
+        const fromUnit = document.getElementById('fromUnit');
+        const toUnit = document.getElementById('toUnit');
 
-    <script>
-        function downloadFile() {
-            // Get script input and selected file type
-            const scriptContent = document.getElementById("scriptInput").value;
-            const fileType = document.getElementById("fileType").value;
+        fromUnit.innerHTML = '';
+        toUnit.innerHTML = '';
 
-            // Create a Blob from the script content
-            const blob = new Blob([scriptContent], { type: 'text/plain' });
+        unitOptions[unitType].forEach(unit => {
+            const option1 = document.createElement('option');
+            const option2 = document.createElement('option');
+            option1.value = option2.value = unit;
+            option1.textContent = option2.textContent = unit;
+            fromUnit.appendChild(option1);
+            toUnit.appendChild(option2);
+        });
+    }
 
-            // Create a download link
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
+    function convert() {
+        const unitType = document.getElementById('unitType').value;
+        const fromUnit = document.getElementById('fromUnit').value;
+        const toUnit = document.getElementById('toUnit').value;
+        const value = parseFloat(document.getElementById('value').value);
+        let result = 0;
 
-            // Set the download file name based on selected type
-            const fileName = 'script.' + fileType;
-            link.download = fileName;
-
-            // Trigger the download
-            link.click();
+        if (unitType === 'storage') {
+            if (fromUnit === 'Bits' && toUnit === 'Bytes') result = value / 8;
+            if (fromUnit === 'Bytes' && toUnit === 'Bits') result = value * 8;
+            if (fromUnit === 'Kilobytes' && toUnit === 'Bytes') result = value * 1024;
+            if (fromUnit === 'Megabytes' && toUnit === 'Kilobytes') result = value * 1024;
+            if (fromUnit === 'Gigabytes' && toUnit === 'Megabytes') result = value * 1024;
+            if (fromUnit === 'Terabytes' && toUnit === 'Gigabytes') result = value * 1024;
         }
-    </script>
+
+        document.getElementById('result').textContent = `Result: ${result} ${toUnit}`;
+    }
+
+    updateUnits();
+</script>
+
 </body>
 </html>
