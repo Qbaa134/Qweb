@@ -1,6 +1,6 @@
 # 📡 Projekt Beacon Spammer 🚀
 
-Cześć! 👋 Witam w projekcie **Beacon Spammer**, który pozwala na generowanie fałszywych sieci Wi-Fi (SSID) za pomocą mikrokontrolera ESP8266. To narzędzie może być użyteczne w różnych scenariuszach, takich jak testowanie bezpieczeństwa sieci Wi-Fi 🔐, badanie zachowań urządzeń bezprzewodowych 🧑‍💻, czy po prostu eksperymentowanie z technologią 💡.
+Cześć! 👋 Witam Was w projekcie **Beacon Spammer**, który pozwala na generowanie fałszywych sieci Wi-Fi (SSID) za pomocą mikrokontrolera ESP8266. To narzędzie może być użyteczne w różnych scenariuszach, takich jak testowanie bezpieczeństwa sieci Wi-Fi 🔐, badanie zachowań urządzeń bezprzewodowych 🧑‍💻, czy po prostu eksperymentowanie z technologią 💡.
 
 ## 🎯 Cel projektu
 
@@ -52,6 +52,7 @@ W tym projekcie SSID są generowane dynamicznie, a ich nazwy zaczynają się od 
 - `MyFakeSSID_2`
 - `MyFakeSSID_3`
 - itd.
+<img src="https://github.com/user-attachments/assets/221b3a9a-a3d4-42a1-ae6d-21971daa90ac" alt="Opis obrazu" width="400"/>
 
 Dzięki temu łatwo możesz tworzyć wiele sieci o różnych nazwach, co przydaje się w testach bezpieczeństwa.
 
@@ -59,30 +60,20 @@ Dzięki temu łatwo możesz tworzyć wiele sieci o różnych nazwach, co przydaj
 
 ### Zmiana prefiksu SSID
 
-Aby zmienić prefiks SSID (czyli nazwę generowanych sieci), wystarczy edytować zmienną w kodzie:
+Aby zmienić prefiks SSID (czyli nazwę generowanych sieci), wystarczy edytować/dodać zmienną w kodzie:
 
 ```cpp
-const char* ssidPrefix = "MyFakeSSID_";
+"twojasieć\n";
 ```
 
-Możesz zamienić `"MyFakeSSID_"` na dowolny ciąg znaków, który będzie początkiem nazw sieci.
-
-### Określenie interwału beaconów
-
-Czas pomiędzy wysyłaniem kolejnych pakietów beacon jest ustawiony na `100ms`. Możesz to zmienić, edytując zmienną `beaconInterval`:
-
-```cpp
-const int beaconInterval = 100;  // Czas między wysyłaniem beaconów w ms
-```
-
-Zmieniając wartość, możesz dostosować szybkość, z jaką będą wysyłane kolejne pakiety.
+Możesz zamienić `"twojasieć"` na dowolny ciąg znaków, który będzie początkiem nazw sieci.
 
 ### WPA2
 
 W projekcie zaimplementowano możliwość włączenia trybu WPA2. Jeśli chcesz, aby twoje sieci były "zabezpieczone" przy pomocy WPA2, ustaw zmienną `wpa2` na `true`:
 
 ```cpp
-bool wpa2 = true;  // Tryb WPA2
+const bool wpa2 = true;  // Tryb WPA2
 ```
 
 Jeśli chcesz, aby sieci były "otwarte" (bez szyfrowania), ustaw ją na `false`.
@@ -120,10 +111,6 @@ Możesz również wykorzystać projekt do monitorowania, które urządzenia są 
 
 ## 🌟 Podsumowanie
 
-**Fake SSID Generator** to świetne narzędzie do eksperymentowania z technologią Wi-Fi, testowania bezpieczeństwa sieci, a także zabawy z mikrokontrolerami. Dzięki prostocie i elastyczności w konfiguracji możesz dostosować projekt do swoich potrzeb i zrealizować ciekawe projekty związane z sieciami bezprzewodowymi.
+**Beacon Spammer** to świetne narzędzie do eksperymentowania z technologią Wi-Fi, testowania bezpieczeństwa sieci, a także zabawy z mikrokontrolerami. Dzięki prostocie i elastyczności w konfiguracji możesz dostosować projekt do swoich potrzeb i zrealizować ciekawe projekty związane z sieciami bezprzewodowymi.
 
-Jeśli masz pytania lub sugestie dotyczące projektu, śmiało się z nimi podziel! 🚀
-
----
-
-Mam nadzieję, że ten plik README spełnia Twoje oczekiwania! Jeśli chcesz dodać coś więcej lub zmienić jakąś część, daj mi znać!
+Jeśli masz pytania lub sugestie dotyczące projektu, śmiało się nimi podziel! 🚀
